@@ -7,6 +7,7 @@ export default class ProjectModal extends React.Component {
 
         this.state = {
             selectedProject: "",
+            textInputValue: "",
         }
     }
 
@@ -16,6 +17,26 @@ export default class ProjectModal extends React.Component {
         })
 
         console.log("You've chosen", e.target.value)
+    }
+
+    onRadioButtonChange = (e) => {
+        this.setState({
+            selectedRadioButton: e.target.value
+        });
+
+        console.log("You've selected", e.target.value)
+    }
+
+    handleTyping = (e) => {
+        this.setState({
+            textInputValue: e.target.value
+        });
+
+        console.log("You are typing", e.target.value)
+    }
+
+    handleNext = () => {
+        this.props.clickHandler(this.state.selectedProject);
     }
     
     render(){
@@ -30,12 +51,19 @@ export default class ProjectModal extends React.Component {
                     <h2>Add { this.props.trackName } to...</h2>
                     
                     <div className="js-new-project">
-                        <input type="radio" value="new" className="js-radio-button" />A new project
+                        <input type="radio" 
+                                value="new" 
+                                className="js-radio-button" 
+                                onChange = { this.onRadioButtonChange }
+                                checked = { this.state.selectedRadioButton === "new" }
+                                />A new project
                         <div className="js-text-input">
                             <label>
                                 Name:
                                 <input type="text" 
                                     placeholder = "Project Name"
+                                    value = { this.state.textInputValue }
+                                    onChange = { this.handleTyping }
                                 />
                             </label>
                         </div>
@@ -43,7 +71,12 @@ export default class ProjectModal extends React.Component {
                         <label htmlFor="checkbox">Give everyone from my organization access to this project</label> 
                     </div>
                     <div className="js-exisiting-project">
-                        <input type="radio" value="existing" className="js-radio-button"/>An existing project
+                        <input type="radio" 
+                                value="existing" 
+                                className="js-radio-button" 
+                                onChange = { this.onRadioButtonChange }
+                                checked = { this.state.selectedRadioButton === "existing" }
+                                />An existing project
                         <div className = "js-select-menu-div">
                             <select className = "js-select-menu" value={ this.state.selectedProject } onChange = { this.onProjectSelection }>
                                 <option>Choose An Existing Project...</option>
@@ -56,7 +89,7 @@ export default class ProjectModal extends React.Component {
                         </div>    
                     </div>
 
-                    <button className="js-next-button">Next</button>
+                    <button className="js-next-button" onClick={ this.handleNext }>Next</button>
               
 
 

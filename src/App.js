@@ -29,9 +29,15 @@ class App extends React.Component {
     this.setState({isModalOpen: false})
   }
 
-  // addTrackToProject = (projectName, trackName) => {
-    
-  // }
+  addTrackToProject = (projectName) => {
+    const projects = [...this.state.projectList];
+    const project = projects.filter(proj => proj.playlist === projectName)[0];
+    project.tracks.push(this.state.currentTrack);
+
+    this.setState({
+      isModalOpen: false
+    });
+  }
 
   render(){
     return(
@@ -47,6 +53,7 @@ class App extends React.Component {
                 onClose={ this.handleCloseModal }
                 trackName={ this.state.currentTrack }
                 projects={ this.state.playlists }
+                clickHandler = { this.addTrackToProject }
               />
             </div>
             <div className="js-results-row" data-tracktitle="Cuckoo for Coccao Puffs">
@@ -57,6 +64,8 @@ class App extends React.Component {
                 onClose={ this.handleCloseModal }
                 trackName={ this.state.currentTrack }
                 projects={ this.state.playlists }
+                clickHandler = { this.addTrackToProject }
+
               />
             </div>
             <div className="js-results-row" data-tracktitle="Chicken Fried">
@@ -67,11 +76,12 @@ class App extends React.Component {
                 onClose={ this.handleCloseModal }
                 trackName={ this.state.currentTrack }
                 projects={ this.state.playlists }
+                clickHandler = { this.addTrackToProject }
               />
             </div>
           </div>
         </div>
-        <ProjectPage />
+        <ProjectPage list = { this.state.projectList }/>
       </div>
     )
   }
