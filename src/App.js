@@ -8,7 +8,9 @@ class App extends React.Component {
     this.state = {
       isModalOpen: false,
       currentTrack: "",
+      projectList: ["Play that Funky Music", "Sick Frat House Beats", "Smoking Ganja Chilled Tunes", ],
     }
+
   }
 
   handleOpenModal = (e) => {
@@ -16,6 +18,7 @@ class App extends React.Component {
       isModalOpen: true,
       currentTrack: e.target.value,
     })
+
   }
 
   handleCloseModal = () => {
@@ -31,25 +34,30 @@ class App extends React.Component {
               <h3>Space Monkey</h3>
               <button className="open-modal-button" onClick={this.handleOpenModal} value="Space Monkey">Open Modal</button>
               <ProjectModal className="js-modal"
-                show={this.state.isModalOpen} 
-                onClose={this.handleCloseModal}
+                show={ this.state.isModalOpen } 
+                onClose={ this.handleCloseModal }
+                trackName={ this.state.currentTrack }
+                projects={ this.state.projectList }
               />
             </div>
             <div className="js-results-row" data-tracktitle="Cuckoo for Coccao Puffs">
               <h3>Cuckoo for Coccao Puffs</h3>
               <button className="open-modal-button" onClick={this.handleOpenModal} value="Cuckoo for Coccao Puffs">Open Modal</button>
               <ProjectModal className="js-modal"
-                show={this.state.isModalOpen} 
-                onClose={this.handleCloseModal}
+                show={ this.state.isModalOpen } 
+                onClose={ this.handleCloseModal }
+                trackName={ this.state.currentTrack }
+                projects={ this.state.projectList }
               />
             </div>
             <div className="js-results-row" data-tracktitle="Chicken Fried">
               <h3>Chicken Fried</h3>
               <button className="open-modal-button" onClick={this.handleOpenModal} value="Chicken Fried">Open Modal</button>
               <ProjectModal className="js-modal"
-                show={this.state.isModalOpen} 
-                onClose={this.handleCloseModal}
-                trackName={this.state.currentTrack}
+                show={ this.state.isModalOpen } 
+                onClose={ this.handleCloseModal }
+                trackName={ this.state.currentTrack }
+                projects={ this.state.projectList }
               />
             </div>
           </div>
