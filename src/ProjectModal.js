@@ -7,7 +7,7 @@ export default class ProjectModal extends React.Component {
             return null;
         }
         return(
-            <Modal className="modal" isOpen = { this.props.show }>
+            <Modal className="modal" isOpen = { this.props.show } >
               
                     <button className="js-close-modal-button" onClick={ this.props.onClose }>Close Modal</button>
                     <h1>Add Track to Project</h1>
@@ -24,7 +24,7 @@ export default class ProjectModal extends React.Component {
                             </label>
                         </div>
                         <input type="checkbox" value="allAccess" className="js-checkbox" id="checkbox" />
-                        <label for="checkbox">Give everyone from my organization access to this project</label> 
+                        <label htmlFor="checkbox">Give everyone from my organization access to this project</label> 
                     </div>
                     <div className="js-exisiting-project">
                         <input type="radio" value="existing" className="js-radio-button"/>An existing project

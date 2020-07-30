@@ -5,7 +5,7 @@ export default class ProjectPage extends React.Component {
         super(props);
 
         this.state = {
-            projectList: [ { playlist: "Play that Funky Music", tracks: [] }, 
+            projectList: [ { playlist: "Play that Funky Music", tracks: ["hiii", "heeyyyy", "hello"] }, 
                         { playlist: "Sick Frat House Beats", tracks:[] }, 
                         { playlist: "Smoking Ganja Chilled Tunes", tracks:[] } ],
            
@@ -19,8 +19,15 @@ export default class ProjectPage extends React.Component {
                 <h1>Projects</h1>
                 <ul>
                     {this.state.projectList.map(project => (
-                        <li>
-                            {project}
+                        <li key={`js-track-${project.playlist}`}>
+                            {project.playlist}
+                            <ul>
+                                {project.tracks.map(track => (
+                                    <li key={track}>
+                                        {track}
+                                    </li>
+                                ))}
+                            </ul>
                         </li>
                     ))}
                 </ul>

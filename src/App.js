@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectModal from './ProjectModal';
+import ProjectPage from './ProjectPage';
 import './App.css';
 
 class App extends React.Component {
@@ -28,11 +29,12 @@ class App extends React.Component {
   render(){
     return(
       <div className="App">
+        <h1>Track List</h1>
         <div className="track-list row">
           <div className="track-section container">
             <div className="js-results-row" data-tracktitle="Space Monkey">
               <h3>Space Monkey</h3>
-              <button className="open-modal-button" onClick={this.handleOpenModal} value="Space Monkey">Open Modal</button>
+              <button className="open-modal-button" onClick={this.handleOpenModal} value="Space Monkey">Add to Project</button>
               <ProjectModal className="js-modal"
                 show={ this.state.isModalOpen } 
                 onClose={ this.handleCloseModal }
@@ -42,7 +44,7 @@ class App extends React.Component {
             </div>
             <div className="js-results-row" data-tracktitle="Cuckoo for Coccao Puffs">
               <h3>Cuckoo for Coccao Puffs</h3>
-              <button className="open-modal-button" onClick={this.handleOpenModal} value="Cuckoo for Coccao Puffs">Open Modal</button>
+              <button className="open-modal-button" onClick={this.handleOpenModal} value="Cuckoo for Coccao Puffs">Add to Project</button>
               <ProjectModal className="js-modal"
                 show={ this.state.isModalOpen } 
                 onClose={ this.handleCloseModal }
@@ -52,7 +54,7 @@ class App extends React.Component {
             </div>
             <div className="js-results-row" data-tracktitle="Chicken Fried">
               <h3>Chicken Fried</h3>
-              <button className="open-modal-button" onClick={this.handleOpenModal} value="Chicken Fried">Open Modal</button>
+              <button className="open-modal-button" onClick={this.handleOpenModal} value="Chicken Fried">Add to Project</button>
               <ProjectModal className="js-modal"
                 show={ this.state.isModalOpen } 
                 onClose={ this.handleCloseModal }
@@ -62,6 +64,7 @@ class App extends React.Component {
             </div>
           </div>
         </div>
+        <ProjectPage />
       </div>
     )
   }
