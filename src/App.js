@@ -9,7 +9,10 @@ class App extends React.Component {
     this.state = {
       isModalOpen: false,
       currentTrack: "",
-      projectList: ["Play that Funky Music", "Sick Frat House Beats", "Smoking Ganja Chilled Tunes", ],
+      playlists: ["Play that Funky Music", "Sick Frat House Beats", "Smoking Ganja Chilled Tunes", ],
+      projectList: [ { playlist: "Play that Funky Music", tracks: ["hiii", "heeyyyy", "hello"] }, 
+                        { playlist: "Sick Frat House Beats", tracks:[] }, 
+                        { playlist: "Smoking Ganja Chilled Tunes", tracks:[] } ],
     }
 
   }
@@ -26,6 +29,10 @@ class App extends React.Component {
     this.setState({isModalOpen: false})
   }
 
+  // addTrackToProject = (projectName, trackName) => {
+    
+  // }
+
   render(){
     return(
       <div className="App">
@@ -39,7 +46,7 @@ class App extends React.Component {
                 show={ this.state.isModalOpen } 
                 onClose={ this.handleCloseModal }
                 trackName={ this.state.currentTrack }
-                projects={ this.state.projectList }
+                projects={ this.state.playlists }
               />
             </div>
             <div className="js-results-row" data-tracktitle="Cuckoo for Coccao Puffs">
@@ -49,7 +56,7 @@ class App extends React.Component {
                 show={ this.state.isModalOpen } 
                 onClose={ this.handleCloseModal }
                 trackName={ this.state.currentTrack }
-                projects={ this.state.projectList }
+                projects={ this.state.playlists }
               />
             </div>
             <div className="js-results-row" data-tracktitle="Chicken Fried">
@@ -59,7 +66,7 @@ class App extends React.Component {
                 show={ this.state.isModalOpen } 
                 onClose={ this.handleCloseModal }
                 trackName={ this.state.currentTrack }
-                projects={ this.state.projectList }
+                projects={ this.state.playlists }
               />
             </div>
           </div>

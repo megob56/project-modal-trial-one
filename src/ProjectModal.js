@@ -2,6 +2,22 @@ import React from 'react';
 import Modal from 'react-modal';
 
 export default class ProjectModal extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            selectedProject: "",
+        }
+    }
+
+    onProjectSelection = (e) => {
+        this.setState({
+            selectedProject: e.target.value
+        })
+
+        console.log("You've chosen", e.target.value)
+    }
+    
     render(){
         if(!this.props.show){
             return null;
@@ -28,8 +44,8 @@ export default class ProjectModal extends React.Component {
                     </div>
                     <div className="js-exisiting-project">
                         <input type="radio" value="existing" className="js-radio-button"/>An existing project
-                        <div className = "js-select-menu">
-                            <select>
+                        <div className = "js-select-menu-div">
+                            <select className = "js-select-menu" value={ this.state.selectedProject } onChange = { this.onProjectSelection }>
                                 <option>Choose An Existing Project...</option>
                                 {this.props.projects.map(project => (
                                     <option key={ project } value={ project }>

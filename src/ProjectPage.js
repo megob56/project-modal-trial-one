@@ -12,8 +12,7 @@ export default class ProjectPage extends React.Component {
         }
     }
 
-    render(){
-        
+    render(){   
         return(
             <div className="js-projectpage">
                 <h1>Projects</h1>
