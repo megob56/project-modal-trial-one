@@ -7,7 +7,8 @@ export default class ProjectModal extends React.Component {
 
         this.state = {
             selectedProject: "",
-            textInputValue: "",
+            //textInputValue: "",
+            checked: false,
         }
     }
 
@@ -35,8 +36,22 @@ export default class ProjectModal extends React.Component {
         console.log("You are typing", e.target.value)
     }
 
+    handleCheckedBox = () => {
+        this.setState({
+            checked: true
+        });
+    }
+
     handleNext = () => {
-        this.props.clickHandler(this.state.selectedProject);
+
+        if(this.state.selectedRadioButton === "existing"){
+
+            this.props.clickHandler(this.state.selectedProject);
+        }
+
+        if(this.state.selectedRadioButton === "new"){
+            this.props.clickHandler(this.state.textInputValue);
+        }
     }
     
     render(){
@@ -67,7 +82,12 @@ export default class ProjectModal extends React.Component {
                                 />
                             </label>
                         </div>
-                        <input type="checkbox" value="allAccess" className="js-checkbox" id="checkbox" />
+                        <input type="checkbox" 
+                            value="allAccess" 
+                            className="js-checkbox" 
+                            id="checkbox" 
+                            onClick = { this.handleCheckedBox }
+                        />
                         <label htmlFor="checkbox">Give everyone from my organization access to this project</label> 
                     </div>
                     <div className="js-exisiting-project">
@@ -81,8 +101,8 @@ export default class ProjectModal extends React.Component {
                             <select className = "js-select-menu" value={ this.state.selectedProject } onChange = { this.onProjectSelection }>
                                 <option>Choose An Existing Project...</option>
                                 {this.props.projects.map(project => (
-                                    <option key={ project } value={ project }>
-                                        { project }
+                                    <option key={project.id} value={ project.playlist }>
+                                        { project.playlist }
                                     </option>
                                 ))}
                             </select>

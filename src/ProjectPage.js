@@ -1,17 +1,6 @@
 import React from 'react';
 
 export default class ProjectPage extends React.Component {
-    // constructor(props){
-    //     super(props);
-
-    //     this.state = {
-    //         projectList: [ { playlist: "Play that Funky Music", tracks: ["hiii", "heeyyyy", "hello"] }, 
-    //                     { playlist: "Sick Frat House Beats", tracks:[] }, 
-    //                     { playlist: "Smoking Ganja Chilled Tunes", tracks:[] } ],
-           
-    //     }
-    // }
-
     render(){   
         return(
             <div className="js-projectpage">
@@ -19,7 +8,8 @@ export default class ProjectPage extends React.Component {
                 <ul>
                     {this.props.list.map(project => (
                         <li key={`js-track-${project.playlist}`}>
-                            {project.playlist}
+                            {project.playlist} 
+                            {/* {!this.props.share && <p>Only me</p>}{this.props.share && <p>Team Access</p>}  */}
                             <ul>
                                 {project.tracks.map(track => (
                                     <li key={track}>

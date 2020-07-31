@@ -1,6 +1,7 @@
 import React from 'react';
 import ProjectModal from './ProjectModal';
 import ProjectPage from './ProjectPage';
+import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 
 class App extends React.Component {
@@ -9,10 +10,10 @@ class App extends React.Component {
     this.state = {
       isModalOpen: false,
       currentTrack: "",
-      playlists: ["Play that Funky Music", "Sick Frat House Beats", "Smoking Ganja Chilled Tunes", ],
-      projectList: [ { playlist: "Play that Funky Music", tracks: ["hiii", "heeyyyy", "hello"] }, 
-                        { playlist: "Sick Frat House Beats", tracks:[] }, 
-                        { playlist: "Smoking Ganja Chilled Tunes", tracks:[] } ],
+      //playlists: ["Play that Funky Music", "Sick Frat House Beats", "Smoking Ganja Chilled Tunes", ],
+      projectList: [ { playlist: "Play that Funky Music", tracks: [], id: "FEA2210C-B3E1-4E22-BD24-2E8E55B2CE46" }, 
+                        { playlist: "Sick Frat House Beats", tracks:[], id: "F4A45037-1C6D-423A-BFDC-AB0300C50F59" }, 
+                        { playlist: "Smoking Ganja Chilled Tunes", tracks:[], id: "89706A4B-9269-4E8B-A4E7-AB0300C51006" } ],
     }
 
   }
@@ -30,11 +31,18 @@ class App extends React.Component {
   }
 
   addTrackToProject = (projectName) => {
+   
     const projects = [...this.state.projectList];
-    const project = projects.filter(proj => proj.playlist === projectName)[0];
+    let project = projects.filter(proj => proj.playlist === projectName)[0];
+    if(!project){ 
+      project = { playlist: projectName, tracks: [], id: uuidv4() };
+      projects.push(project);
+    }
+
     project.tracks.push(this.state.currentTrack);
 
     this.setState({
+      projectList: projects,
       isModalOpen: false
     });
   }
@@ -52,7 +60,7 @@ class App extends React.Component {
                 show={ this.state.isModalOpen } 
                 onClose={ this.handleCloseModal }
                 trackName={ this.state.currentTrack }
-                projects={ this.state.playlists }
+                projects={ this.state.projectList }
                 clickHandler = { this.addTrackToProject }
               />
             </div>
@@ -63,7 +71,7 @@ class App extends React.Component {
                 show={ this.state.isModalOpen } 
                 onClose={ this.handleCloseModal }
                 trackName={ this.state.currentTrack }
-                projects={ this.state.playlists }
+                projects={ this.state.projectList }
                 clickHandler = { this.addTrackToProject }
 
               />
@@ -75,13 +83,13 @@ class App extends React.Component {
                 show={ this.state.isModalOpen } 
                 onClose={ this.handleCloseModal }
                 trackName={ this.state.currentTrack }
-                projects={ this.state.playlists }
+                projects={ this.state.projectList }
                 clickHandler = { this.addTrackToProject }
               />
             </div>
           </div>
         </div>
-        <ProjectPage list = { this.state.projectList }/>
+        <ProjectPage list = { this.state.projectList } />
       </div>
     )
   }
