@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class ProjectModal extends React.Component {
     constructor(props){
@@ -7,17 +8,22 @@ export default class ProjectModal extends React.Component {
 
         this.state = {
             selectedProject: "",
+            trackId: "",
             //textInputValue: "",
             checked: false,
         }
     }
 
     onProjectSelection = (e) => {
+        const selectedIndex = e.target.options.selectedIndex;
         this.setState({
-            selectedProject: e.target.value
+            selectedProject: e.target.value,
+            trackId: e.target.options[selectedIndex].getAttribute('data-key'),
         })
 
         console.log("You've chosen", e.target.value)
+        
+        console.log("Access data key", e.target.options[selectedIndex].getAttribute('data-key'));
     }
 
     onRadioButtonChange = (e) => {
@@ -30,7 +36,8 @@ export default class ProjectModal extends React.Component {
 
     handleTyping = (e) => {
         this.setState({
-            textInputValue: e.target.value
+            textInputValue: e.target.value,
+            trackId: uuidv4(),
         });
 
         console.log("You are typing", e.target.value)
@@ -42,16 +49,36 @@ export default class ProjectModal extends React.Component {
         });
     }
 
-    handleNext = () => {
+     handleNext = async() => {
+         console.log("check", this.state.trackId);
+        let data = {
+            "TrackId": this.state.trackId,
+            "projectadd": 1,
+            "ProjectName" : null
+            };
 
         if(this.state.selectedRadioButton === "existing"){
-
-            this.props.clickHandler(this.state.selectedProject);
+            data.ProjectName = this.state.selectedProject;
         }
 
         if(this.state.selectedRadioButton === "new"){
-            this.props.clickHandler(this.state.textInputValue);
+            data.ProjectName = this.state.textInputValue;
         }
+
+            
+        //let response = 
+        await fetch(`/project/addtrack`, {
+            method:"POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        .then((response) => response.json);
+        
+        //let responseData = await response.json();
+
+        this.props.clickHandler(data.ProjectName, data.TrackId);
     }
     
     render(){
@@ -101,7 +128,7 @@ export default class ProjectModal extends React.Component {
                             <select className = "js-select-menu" value={ this.state.selectedProject } onChange = { this.onProjectSelection }>
                                 <option>Choose An Existing Project...</option>
                                 {this.props.projects.map(project => (
-                                    <option key={project.id} value={ project.playlist }>
+                                    <option key={project.id} data-key={project.id} value={ project.playlist }>
                                         { project.playlist }
                                     </option>
                                 ))}
