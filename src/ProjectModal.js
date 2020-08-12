@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from 'react-modal';
-import { v4 as uuidv4 } from 'uuid';
 
 export default class ProjectModal extends React.Component {
     constructor(props){
@@ -8,7 +7,6 @@ export default class ProjectModal extends React.Component {
 
         this.state = {
             selectedProject: "",
-            trackId: "",
             projectId: "",
             checked: false,
         }
@@ -18,7 +16,7 @@ export default class ProjectModal extends React.Component {
         const selectedIndex = e.target.options.selectedIndex;
         this.setState({
             selectedProject: e.target.value,
-            trackId: e.target.options[selectedIndex].getAttribute('data-key'),
+            projectId: e.target.options[selectedIndex].getAttribute('data-key'),
         })
 
         console.log("You've chosen", e.target.value)
@@ -37,7 +35,6 @@ export default class ProjectModal extends React.Component {
     handleTyping = (e) => {
         this.setState({
             textInputValue: e.target.value,
-            trackId: uuidv4(),
         });
 
         console.log("You are typing", e.target.value)
@@ -50,10 +47,7 @@ export default class ProjectModal extends React.Component {
     }
 
      handleNext = async() => {
-         console.log("check", this.state.trackId);
         let data = {
-            "TrackId": this.state.trackId,
-            "ProjectId": this.state.projectId,
             "projectadd": 1,
             "ProjectName" : null
             };
@@ -71,7 +65,6 @@ export default class ProjectModal extends React.Component {
         }
 
             
-        //let response = 
         await fetch(`/project/addtrack`, { //http://domainapi-staging.anwservices.local/project/addtrack
             method:"POST",
             body: JSON.stringify(data),
@@ -81,9 +74,9 @@ export default class ProjectModal extends React.Component {
         })
         .then((response) => response.json);
         
-        //let responseData = await response.json();
+        
 
-        this.props.clickHandler(data.ProjectName, data.TrackId, data.projectId);
+        this.props.clickHandler(data.ProjectName);
     }
     
     render(){
@@ -139,11 +132,7 @@ export default class ProjectModal extends React.Component {
                         </div>    
                     </div>
 
-                    <button className="js-next-button" onClick={ this.handleNext }>Next</button>
-              
-
-
-                
+                    <button className="js-next-button" onClick={ this.handleNext }>Next</button>    
             </Modal>
         )
     }

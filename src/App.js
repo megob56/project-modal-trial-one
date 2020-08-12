@@ -12,19 +12,21 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentTrack: "",
+      trackId: "",
       isModalOpen: false,
       projectList: [ { project: "Discovery Channel: Shark Week", tracks: [], id: "FEA2210C-B3E1-4E22-BD24-2E8E55B2CE46" }, 
                         { project: "Netflix: Brooklyn Nine-Nine", tracks:[], id: "F4A45037-1C6D-423A-BFDC-AB0300C50F59" }, 
                         { project: "BBC: Dowtown Abbey", tracks:[], id: "89706A4B-9269-4E8B-A4E7-AB0300C51006" } ],
-      trackList: [ { id: 1, name:"Dream Frontiers"}, { id: 2, name:"To The Panel"}, { id: 3, name: "Expedition Unknown Toolkit"}]
+      trackList: [ { id: "1", name:"Dream Frontiers"}, { id: "2", name:"To The Panel"}, { id: "3", name: "Expedition Unknown Toolkit"}]
     }
 
   }
 
-  handleOpenModal = (trackName) => {
+  handleOpenModal = (trackName, trackId) => {
     this.setState({
       isModalOpen: true,
       currentTrack: trackName,
+      trackId: trackId,
     })
 
   }
@@ -37,8 +39,8 @@ class App extends React.Component {
 
   }
 
-  addTrackToProject = (projectName, trackId, projectId) => {
-    console.log("in app trackId", trackId);
+  addTrackToProject = (projectName) => {
+   
     const projects = [...this.state.projectList];
     let project = projects.filter(proj => proj.project === projectName)[0];
     if(!project){ 
@@ -49,11 +51,12 @@ class App extends React.Component {
     console.log("project id in app", project.id);
 
     const track = this.state.currentTrack;
-    project.tracks.push({"trackName": track, "trackId": trackId});
+    project.tracks.push({"trackName": track, "trackId": this.state.trackId});
 
     this.setState({
       projectList: projects,
       currentTrack: "",
+      trackId: "",
       isModalOpen: false,
     });
   }
@@ -65,9 +68,9 @@ class App extends React.Component {
         <div className="track-list row">
           <div className="track-section container">
             {this.state.trackList.map(track => 
-              <div className="js-results-row" data-tracktitle={track.name}>
+              <div className="js-results-row" data-tracktitle={track.name} data-key={track.id}>
                 <h3>{track.name}</h3>
-                <button className="open-modal-button" onClick={() => this.handleOpenModal(track.name)}>Add to Project</button>
+                <button className="open-modal-button" onClick={() => this.handleOpenModal(track.name, track.id)}>Add to Project</button>
                 
               </div>)
             }
