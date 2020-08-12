@@ -9,7 +9,7 @@ export default class ProjectModal extends React.Component {
         this.state = {
             selectedProject: "",
             trackId: "",
-            //textInputValue: "",
+            projectId: "",
             checked: false,
         }
     }
@@ -53,9 +53,14 @@ export default class ProjectModal extends React.Component {
          console.log("check", this.state.trackId);
         let data = {
             "TrackId": this.state.trackId,
+            "ProjectId": this.state.projectId,
             "projectadd": 1,
             "ProjectName" : null
             };
+
+        if(!this.state.selectedRadioButton){
+            return "please choose an option"
+        }
 
         if(this.state.selectedRadioButton === "existing"){
             data.ProjectName = this.state.selectedProject;
@@ -67,7 +72,7 @@ export default class ProjectModal extends React.Component {
 
             
         //let response = 
-        await fetch(`/project/addtrack`, {
+        await fetch(`/project/addtrack`, { //http://domainapi-staging.anwservices.local/project/addtrack
             method:"POST",
             body: JSON.stringify(data),
             headers: {
@@ -78,13 +83,11 @@ export default class ProjectModal extends React.Component {
         
         //let responseData = await response.json();
 
-        this.props.clickHandler(data.ProjectName, data.TrackId);
+        this.props.clickHandler(data.ProjectName, data.TrackId, data.projectId);
     }
     
     render(){
-        if(!this.props.show){
-            return null;
-        }
+       
         return(
             <Modal className="modal" isOpen = { this.props.show } >
               
@@ -128,8 +131,8 @@ export default class ProjectModal extends React.Component {
                             <select className = "js-select-menu" value={ this.state.selectedProject } onChange = { this.onProjectSelection }>
                                 <option>Choose An Existing Project...</option>
                                 {this.props.projects.map(project => (
-                                    <option key={project.id} data-key={project.id} value={ project.playlist }>
-                                        { project.playlist }
+                                    <option key={project.id} data-key={project.id} value={ project.project }>
+                                        { project.project }
                                     </option>
                                 ))}
                             </select>
